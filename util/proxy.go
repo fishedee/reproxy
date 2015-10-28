@@ -20,6 +20,10 @@ func (this *RouteHandler) HandleHttpRequest(request *http.Request)(*CacheRespons
 	request.URL.Scheme = "http"
 	request.URL.Host = this.Host
 	request.RequestURI = ""
+	queryParam := request.URL.Query()
+	queryParam.Del("t")
+	queryParam.Del("_")
+	request.URL.RawQuery = queryParam.Encode()
 
 	url := request.URL.String()
 	method := request.Method

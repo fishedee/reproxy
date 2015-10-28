@@ -1,7 +1,13 @@
 {
-	"listen":8004,
+	"listen":8002,
 	"log_file":"access.log",
 	"location":[
+		{
+			"url":"/activity/getComponent",
+			"proxy":"localhost:8001",
+			"cache_time":"1s",
+			"cache_size":"16m"
+		},
 		{
 			"url":"/",
 			"proxy":"localhost:8001"
