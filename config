@@ -1,0 +1,10 @@
+{
+	"listen":8004,
+	"log_file":"access.log",
+	"location":[
+		{
+			"url":"/",
+			"proxy":"localhost:8001"
+		}
+	]
+}
