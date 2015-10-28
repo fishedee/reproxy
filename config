@@ -3,6 +3,12 @@
 	"log_file":"access.log",
 	"location":[
 		{
+			"url":"/activity/get",
+			"proxy":"localhost:8001",
+			"cache_time":"1s",
+			"cache_size":"16m"
+		},
+		{
 			"url":"/activity/getComponent",
 			"proxy":"localhost:8001",
 			"cache_time":"1s",
