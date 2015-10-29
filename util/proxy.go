@@ -16,7 +16,6 @@ type RouteHandler struct{
 }
 
 func (this *RouteHandler) HandleHttpRequest(request *http.Request)(*CacheResponse,error){
-	request.Host = this.Host
 	request.URL.Scheme = "http"
 	request.URL.Host = this.Host
 	request.RequestURI = ""
