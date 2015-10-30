@@ -1,18 +1,39 @@
-package util
+package module
 
 import (
 	"io/ioutil"
 	"net/http"
-	"strconv"
 	"time"
+	. "github.com/fishedee/reverse-proxy/handler"
 )
+
+type ProxyConfig struct{
+	Listen string `json:"listen"`
+	Server []ProxyServerConfig `json:"server"`
+	Location []ProxyLocationConfig `json:"location"`
+}
+
+type ProxyServerConfig struct{
+	Name string `json:"name"`
+	Type string `json:"type"`
+	Address string `json:"address"`
+}
+
+type ProxyLocationConfig struct{
+	Url string `json:"url"`
+	Proxy string `json:"proxy"`
+	TimeoutWarn string `json:"timeout_warn,omitempty"`
+	TimeoutError string `json:"timeout_error,omitempty"`
+	CacheTime string `json:"cache_time,omitempty"`
+	CacheSize string `json:"cache_size,omitempty"`
+}
 
 type RouteHandler struct{
 	Host string
 	TimeoutWarn time.Duration
-	TimeoutError time.Duration
 	Cache *Cache
 	CacheExpireTime time.Duration
+	Client ProxyHandler
 }
 
 func (this *RouteHandler) HandleHttpRequest(request *http.Request)(*CacheResponse,error){
@@ -40,12 +61,8 @@ func (this *RouteHandler) HandleHttpRequest(request *http.Request)(*CacheRespons
 	}else{
 		defer this.Cache.ReleaseLock(method,url)
 	}
-	
-	client := &http.Client{
-		Timeout:this.TimeoutError,
-	}
 
-    resp, err := client.Do(request)
+    resp, err := this.Client.Do(request)
     if err != nil{
     	return nil,err
     }
@@ -92,7 +109,7 @@ func (this *RouteHandler) HandleTimeoutAndHttp(logBeginner string,writer http.Re
 	select {
 	case result := <- resultChan:
 		if result != nil{
-			Logger.Err(
+			Logger.Error(
 				logBeginner,
 				result.Error(),
 			)
@@ -104,7 +121,7 @@ func (this *RouteHandler) HandleTimeoutAndHttp(logBeginner string,writer http.Re
 		)
 		result := <-resultChan
 		if result != nil{
-			Logger.Err(
+			Logger.Error(
 				logBeginner,
 				result.Error(),
 			)
@@ -127,27 +144,55 @@ func (this *RouteHandler) ServeHTTP(writer http.ResponseWriter, request *http.Re
 	)
 }
 
-func SeviceProxy(port int,location []Location)(error){
-	for _,singleLocation := range location{
-		if singleLocation.TimeoutWarn == 0{
-			singleLocation.TimeoutWarn = 5*1000
+func SeviceProxy(config ProxyConfig)(error){
+	for _,singleLocation := range config.Location{
+		timeoutWarn,err := GetConfigTime(singleLocation.TimeoutWarn)
+		if err != nil{
+			return err
 		}
-		if singleLocation.TimeoutError == 0 {
-			singleLocation.TimeoutError = 30*1000
+		if timeoutWarn == 0{
+			timeoutWarn= 5*time.Second
 		}
+
+		timeoutError,err := GetConfigTime(singleLocation.TimeoutError)
+		if err != nil{
+			return err
+		}
+		if timeoutError == 0 {
+			timeoutError = 30*time.Second
+		}
+
+		cacheExpireTime,err := GetConfigTime(singleLocation.CacheTime)
+		if err != nil{
+			return err
+		}
+
+		cacheSize,err := GetConfigSize(singleLocation.CacheSize)
+		if err != nil{
+			return err
+		}
+
+		proxy := singleLocation.Proxy
+
+		Logger.Info("Handle Url "+singleLocation.Url)
 		http.Handle(
 			singleLocation.Url,
 			&RouteHandler{
-				Host:singleLocation.Proxy,
-				TimeoutWarn:time.Duration(singleLocation.TimeoutWarn) * time.Millisecond,
-				TimeoutError:time.Duration(singleLocation.TimeoutError) * time.Millisecond,
-				Cache:NewCache(singleLocation.CacheSize),
-				CacheExpireTime:time.Duration(singleLocation.CacheTime) * time.Millisecond,
+				Host:proxy,
+				TimeoutWarn:timeoutWarn,
+				Cache:NewCache(cacheSize),
+				CacheExpireTime:cacheExpireTime,
+				Client:NewFastCgiHandler(timeoutError),
 			},
 		)
 	}
-	Logger.Info("Start Proxy Server Listen On :"+strconv.Itoa(port))
-	err := http.ListenAndServe(":"+strconv.Itoa(port), nil)
+	listener,err := GetConfigListener(config.Listen)
+	if err != nil{
+		return err
+	}
+
+	Logger.Info("Start Proxy Server Listen On "+config.Listen)
+	err = http.Serve(listener, nil)
 	if err != nil{
 		return err
 	}

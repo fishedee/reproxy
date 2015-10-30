@@ -2,7 +2,7 @@ package main
 
 import (
 	"fmt"
-	. "github.com/fishedee/reverse-proxy/util"
+	. "github.com/fishedee/reverse-proxy/module"
 )
 
 func main(){
@@ -12,13 +12,13 @@ func main(){
 		return
 	}
 
-	err = InitLogger(config.LogFile)
+	err = InitLogger(config.Log)
 	if err != nil{
 		fmt.Println("启动日志失败 "+err.Error())
 		return
 	}
 
-	err = SeviceProxy(config.Listen,config.Location)
+	err = SeviceProxy(config.ProxyConfig)
 	if err != nil{
 		fmt.Println("启动服务器失败 "+err.Error())
 	}

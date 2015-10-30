@@ -1,4 +1,4 @@
-package util
+package module
 
 import (
 	"encoding/gob"
@@ -76,7 +76,7 @@ func (this *Cache)Get(method string,url string)(*CacheResponse){
     enc := gob.NewDecoder(buf)  
     err = enc.Decode(&result)  
     if err != nil {  
-    	Logger.Print("decode error!"+err.Error())
+    	Logger.Error("decode error!"+err.Error())
         return nil
     }
 
@@ -93,7 +93,7 @@ func (this *Cache)Set(method string,url string,response *CacheResponse,expireTim
     enc := gob.NewEncoder(buf)  
     err := enc.Encode(response)
     if err != nil {
-    	Logger.Print("encode error!"+err.Error())
+    	Logger.Error("encode error!"+err.Error())
         return
     }
 

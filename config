@@ -1,22 +1,37 @@
 {
-	"listen":8002,
-	"log_file":"access.log",
+	"listen":"unix:cur.sock",
+	"log":{
+		"filename":"access.log",
+		"level":"info"
+	},
+	"server":[
+		{
+			"name":"php",
+			"type":"fastcgi",
+			"address":"unix:/var/run/fastcgi/php5-fpm.sock"
+		},
+		{
+			"name":"go",
+			"type":"http",
+			"address":"unix:/var/run/fastcgi/php5-fpm.sock"
+		}
+	],
 	"location":[
 		{
 			"url":"/activity/get",
-			"proxy":"localhost:8001",
+			"server":"php",
 			"cache_time":"1s",
 			"cache_size":"16m"
 		},
 		{
 			"url":"/activity/getComponent",
-			"proxy":"localhost:8001",
+			"server":"php",
 			"cache_time":"1s",
 			"cache_size":"16m"
 		},
 		{
 			"url":"/",
-			"proxy":"localhost:8001"
+			"server":"php"
 		}
 	]
 }
