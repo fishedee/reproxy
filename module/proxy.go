@@ -4,6 +4,7 @@ import (
 	"io/ioutil"
 	"net/http"
 	"time"
+	"errors"
 	. "github.com/fishedee/reverse-proxy/handler"
 )
 
@@ -13,15 +14,9 @@ type ProxyConfig struct{
 	Location []ProxyLocationConfig `json:"location"`
 }
 
-type ProxyServerConfig struct{
-	Name string `json:"name"`
-	Type string `json:"type"`
-	Address string `json:"address"`
-}
-
 type ProxyLocationConfig struct{
 	Url string `json:"url"`
-	Proxy string `json:"proxy"`
+	Server string `json:"server"`
 	TimeoutWarn string `json:"timeout_warn,omitempty"`
 	TimeoutError string `json:"timeout_error,omitempty"`
 	CacheTime string `json:"cache_time,omitempty"`
@@ -29,7 +24,6 @@ type ProxyLocationConfig struct{
 }
 
 type RouteHandler struct{
-	Host string
 	TimeoutWarn time.Duration
 	Cache *Cache
 	CacheExpireTime time.Duration
@@ -37,8 +31,6 @@ type RouteHandler struct{
 }
 
 func (this *RouteHandler) HandleHttpRequest(request *http.Request)(*CacheResponse,error){
-	request.URL.Scheme = "http"
-	request.URL.Host = this.Host
 	request.RequestURI = ""
 	queryParam := request.URL.Query()
 	queryParam.Del("t")
@@ -145,7 +137,15 @@ func (this *RouteHandler) ServeHTTP(writer http.ResponseWriter, request *http.Re
 }
 
 func SeviceProxy(config ProxyConfig)(error){
+	serverMap := map[string]ProxyServerConfig{}
+	for _,singleServer := range config.Server{
+		serverMap[singleServer.Name] = singleServer
+	}
+
 	for _,singleLocation := range config.Location{
+		url := singleLocation.Url
+		server := singleLocation.Server
+
 		timeoutWarn,err := GetConfigTime(singleLocation.TimeoutWarn)
 		if err != nil{
 			return err
@@ -172,17 +172,24 @@ func SeviceProxy(config ProxyConfig)(error){
 			return err
 		}
 
-		proxy := singleLocation.Proxy
+		singleServer,ok := serverMap[server]
+		if ok == false{
+			return errors.New("没有url找到对应的server "+url)
+		}
+
+		client,err := NewHandler(singleServer,timeoutError)
+		if err != nil{
+			return err
+		}
 
 		Logger.Info("Handle Url "+singleLocation.Url)
 		http.Handle(
 			singleLocation.Url,
 			&RouteHandler{
-				Host:proxy,
 				TimeoutWarn:timeoutWarn,
 				Cache:NewCache(cacheSize),
 				CacheExpireTime:cacheExpireTime,
-				Client:NewFastCgiHandler(timeoutError),
+				Client:client,
 			},
 		)
 	}

@@ -1,5 +1,5 @@
 {
-	"listen":"unix:cur.sock",
+	"listen":":8002",
 	"log":{
 		"filename":"access.log",
 		"level":"info"
@@ -8,7 +8,9 @@
 		{
 			"name":"php",
 			"type":"fastcgi",
-			"address":"unix:/var/run/fastcgi/php5-fpm.sock"
+			"address":"unix:/var/run/fastcgi/php5-fpm.sock",
+			"document_root":"/var/www/BakeWeb",
+			"document_index":"/server/index.php"
 		},
 		{
 			"name":"go",

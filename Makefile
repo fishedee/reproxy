@@ -1,5 +1,6 @@
 .PHONY:debug install watch release
 debug:
+	-pkill reverse-proxy
 	go run main.go
 install:
 	go get github.com/coocood/freecache
