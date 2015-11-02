@@ -1,10 +1,8 @@
 .PHONY:debug install build stop start restart
 debug:build stop start
 	echo "finish"
-install:
-	go get github.com/coocood/freecache
 build:
-	go build main.go
+	godep go build main.go
 	mv main reproxy
 stop:
 	rm -rf reproxy.sock

@@ -1,0 +1,33 @@
+{
+	"ImportPath": "github.com/fishedee/reproxy",
+	"GoVersion": "go1.5.1",
+	"Deps": [
+		{
+			"ImportPath": "github.com/astaxie/beego/logs",
+			"Comment": "v1.5.0-3-ga89f14d",
+			"Rev": "a89f14d80dab442927bdc11d641aa1250ab8ad71"
+		},
+		{
+			"ImportPath": "github.com/coocood/freecache",
+			"Rev": "a27035d5537f1fa5518225e9373c9ec7450f2ea2"
+		},
+		{
+			"ImportPath": "github.com/flynn/go-shlex",
+			"Rev": "3f9db97f856818214da2e1057f8ad84803971cff"
+		},
+		{
+			"ImportPath": "github.com/mholt/caddy/middleware",
+			"Comment": "v0.7.6-76-gd227bec",
+			"Rev": "d227bec0fffd3e8f89d0e20209b8ffe00c9f8242"
+		},
+		{
+			"ImportPath": "github.com/spaolacci/murmur3",
+			"Rev": "0d12bf811670bf6a1a63828dfbd003eded177fce"
+		},
+		{
+			"ImportPath": "gopkg.in/natefinch/lumberjack.v2",
+			"Comment": "v1.0-18-g600ceb4",
+			"Rev": "600ceb4523e5b7ff745f91083c8a023c2bf73af5"
+		}
+	]
+}
