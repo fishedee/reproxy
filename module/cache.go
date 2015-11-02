@@ -5,7 +5,6 @@ import (
 	"time"
 	"bytes"
 	"sync"
-	//"fmt"
 	"github.com/coocood/freecache"
 )
 

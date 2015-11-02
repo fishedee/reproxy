@@ -5,15 +5,15 @@ install:
 	go get github.com/coocood/freecache
 build:
 	go build main.go
-	mv main reverse-proxy
+	mv main reproxy
 stop:
-	rm -rf reverse-proxy.sock
-	-pkill reverse-proxy
-	-ps aux | grep -v "grep" | grep reverse-proxy
+	rm -rf reproxy.sock
+	-pkill reproxy
+	-ps aux | grep -v "grep" | grep reproxy
 start:
-	nohup ./reverse-proxy > nohup.out 2>&1 &
+	nohup ./reproxy > nohup.out 2>&1 &
 	sleep 2s
-	sudo chown www-data:www-data reverse-proxy.sock
-	-ps aux | grep -v "grep" | grep reverse-proxy
+	sudo chown www-data:www-data reproxy.sock
+	-ps aux | grep -v "grep" | grep reproxy
 restart:build stop start
 	echo "finish"

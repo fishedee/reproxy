@@ -1,5 +1,5 @@
 {
-	"listen":"unix:reverse-proxy.sock",
+	"listen":"unix:reproxy.sock",
 	"log":{
 		"filename":"log/access.log",
 		"level":"info"
