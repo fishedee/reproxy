@@ -27,6 +27,8 @@ func NewHttpHandler(protocol string,address string,timeoutError time.Duration )(
 }
 
 func (this *HttpHandler)Do(request *http.Request)(*http.Response,error){
+	request.URL.Scheme = "http"
+	request.URL.Host = "test"
 	resp, err := this.client.Do(request)
     if err != nil{
     	return nil,err

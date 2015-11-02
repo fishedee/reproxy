@@ -78,11 +78,10 @@ func (this *RouteHandler) HandleHttpRequest(request *http.Request)(*CacheRespons
 
     return cacheResponse,nil
 }
-func (this *RouteHandler) HandleHttp(result chan error ,writer http.ResponseWriter,request *http.Request){
+func (this *RouteHandler) HandleHttp(writer http.ResponseWriter,request *http.Request)(int,error){
 	resp,err := this.HandleHttpRequest(request)
 	if err != nil{
-		result <- err
-		return
+		return 0,err
 	}
 
     for k, v := range resp.Header {
@@ -92,47 +91,49 @@ func (this *RouteHandler) HandleHttp(result chan error ,writer http.ResponseWrit
     }
     writer.WriteHeader(resp.StatusCode)
     writer.Write(resp.Body)
-    result <- nil
+   	return resp.StatusCode,nil
 }
 
-func (this *RouteHandler) HandleTimeoutAndHttp(logBeginner string,writer http.ResponseWriter,request *http.Request){
-	resultChan := make(chan error)
-	go this.HandleHttp(resultChan,writer,request)
-	select {
-	case result := <- resultChan:
-		if result != nil{
-			Logger.Error(
-				logBeginner,
-				result.Error(),
-			)
-		}
-	case <- time.After(this.TimeoutWarn):
+func (this *RouteHandler) HandleTimeoutAndHttp(logBeginner string,writer http.ResponseWriter,request *http.Request)(error){
+	timer := time.AfterFunc(this.TimeoutWarn,func(){
 		Logger.Warn(
+			"%s 执行时间超长",
 			logBeginner,
-			"执行时间超长 ",
 		)
-		result := <-resultChan
-		if result != nil{
-			Logger.Error(
-				logBeginner,
-				result.Error(),
-			)
-		}
+	})
+	defer timer.Stop()
+	statusCode,err := this.HandleHttp(writer,request)
+	if err != nil{
+		return err
 	}
-	close(resultChan)
+	if statusCode != 200 &&
+		statusCode != 304{
+		Logger.Warn(
+			"%s 返回码:%d",
+			logBeginner,
+			statusCode,
+		)
+	}
+	return nil
 }
 
 func (this *RouteHandler) ServeHTTP(writer http.ResponseWriter, request *http.Request){
 	beginTime := time.Now().UnixNano()
-	logBeginner := request.RemoteAddr + " -- [" +request.Method+" "+request.RequestURI+"] "
-	this.HandleTimeoutAndHttp(logBeginner,writer,request)
+	logBeginner := request.RemoteAddr + " -- [" +request.Method+" "+request.RequestURI+"]"
+	err := this.HandleTimeoutAndHttp(logBeginner,writer,request)
 	endTime := time.Now().UnixNano()
 	
+	if err != nil{
+		Logger.Error(
+			"%s %s",
+			logBeginner,
+			err.Error(),
+		)
+	}
 	Logger.Info(
+		"%s execution time: %f ms",
 		logBeginner,
-		"execution time: ",
 		float64(endTime-beginTime)/1000000,
-		"ms",
 	)
 }
 

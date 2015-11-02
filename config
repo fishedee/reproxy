@@ -1,7 +1,7 @@
 {
-	"listen":":8002",
+	"listen":"unix:reverse-proxy.sock",
 	"log":{
-		"filename":"access.log",
+		"filename":"log/access.log",
 		"level":"info"
 	},
 	"server":[
@@ -15,7 +15,7 @@
 		{
 			"name":"go",
 			"type":"http",
-			"address":"unix:/var/run/fastcgi/php5-fpm.sock"
+			"address":":8001"
 		}
 	],
 	"location":[
