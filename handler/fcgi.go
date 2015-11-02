@@ -16,12 +16,14 @@ type FastCgiHandler struct{
 	address string
 	documentRoot string
 	documentIndex string
+	params map[string]string
 }
 
-func NewFastCgiHandler(protocol string, address string, documentRoot string,documentIndex string,timeoutError time.Duration )(ProxyHandler,error){
+func NewFastCgiHandler(protocol string, address string, documentRoot string,documentIndex string,params map[string]string,timeoutError time.Duration )(ProxyHandler,error){
 	return &FastCgiHandler{
 		protocol:protocol,
 		address:address,
+		params:params,
 		documentRoot:documentRoot,
 		documentIndex:documentIndex,
 	},nil
@@ -56,6 +58,10 @@ func (this *FastCgiHandler)Do(request *http.Request)(*http.Response,error){
 	}else{
 		header["REMOTE_ADDR"] = request.RemoteAddr
 	}
+	for key,value := range this.params{
+		header[key] = value
+	}
+	header["HTTP_HOST"] = request.Host;
 	for key,value := range request.Header{
 		header["HTTP_"+strings.ToUpper(key)] = value[0]
 	}

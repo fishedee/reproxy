@@ -13,6 +13,7 @@ type ProxyServerConfig struct{
 	Address string `json:"address"`
 	DocumentRoot string `json:"document_root,omitempty"`
 	DocumentIndex string `json:"document_index,omitempty"`
+	Params map[string]string `json:"params,omitempty"`
 }
 
 type ProxyHandler interface{
@@ -45,6 +46,7 @@ func NewHandler(singleServer ProxyServerConfig,timeoutError time.Duration)(Proxy
 			singleServerAddr,
 			singleServer.DocumentRoot,
 			singleServer.DocumentIndex,
+			singleServer.Params,
 			timeoutError,
 		)
 	}else if singleServer.Type == "" || singleServer.Type == "http"{
