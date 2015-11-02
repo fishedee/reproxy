@@ -12,7 +12,9 @@ high performance reverse proxy written by go
 ### Install
 
 git clone github.com/fishedee/reproxy
+
 make
+
 ./reproxy 
 
 ### Config
