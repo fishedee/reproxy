@@ -52,9 +52,9 @@ func (this *FastCgiHandler)Do(request *http.Request)(*http.Response,error){
 	header["SERVER_PORT"] = "8001"
 	header["SERVER_NAME"] = ""
 	header["HTTPS"] = "0"
-	if request.Header["X-Real-IP"] != nil &&
-		len(request.Header["X-Real-IP"]) != 0 {
-		header["REMOTE_ADDR"] = request.Header["X-Real-IP"][0]
+	if request.Header["X-Real-Ip"] != nil &&
+		len(request.Header["X-Real-Ip"]) != 0 {
+		header["REMOTE_ADDR"] = request.Header["X-Real-Ip"][0]
 	}else{
 		header["REMOTE_ADDR"] = request.RemoteAddr
 	}
