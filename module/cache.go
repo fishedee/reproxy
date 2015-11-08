@@ -79,6 +79,7 @@ func (this *Cache)Get(method string,url string)(*CacheResponse){
         return nil
     }
 
+    delete(result.Header,"Set-Cookie")
 	return &result
 }
 

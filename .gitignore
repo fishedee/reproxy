@@ -1,4 +1,4 @@
-access.log
+log/access.log*
 nohup.out
 reproxy
 

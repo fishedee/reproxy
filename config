@@ -1,5 +1,6 @@
 {
-	"listen":"unix:reproxy.sock",
+	"listen":":8002",
+	"user":"www-data",
 	"log":{
 		"filename":"log/access.log",
 		"level":"info"

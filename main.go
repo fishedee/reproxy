@@ -12,6 +12,12 @@ func main(){
 		return
 	}
 
+	err = InitUser(config.UserConfig)
+	if err != nil{
+		fmt.Println("初始化用户失败 "+err.Error())
+		return
+	}
+
 	err = InitLogger(config.Log)
 	if err != nil{
 		fmt.Println("启动日志失败 "+err.Error())

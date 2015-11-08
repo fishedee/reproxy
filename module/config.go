@@ -13,6 +13,7 @@ import (
 
 type Config struct{
 	ProxyConfig
+	UserConfig
 	Log LogConfig `json:"log"`
 }
 

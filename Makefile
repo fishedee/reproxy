@@ -6,12 +6,11 @@ build:
 	mv main reproxy
 stop:
 	rm -rf reproxy.sock
-	-pkill reproxy
+	-sudo pkill reproxy
 	-ps aux | grep -v "grep" | grep reproxy
 start:
-	nohup ./reproxy > nohup.out 2>&1 &
-	sleep 2s
-	sudo chown www-data:www-data reproxy.sock
+	sudo -u www-data nohup ./reproxy > nohup.out 2>&1 &
+	sleep 1
 	-ps aux | grep -v "grep" | grep reproxy
 restart:build stop start
 	echo "finish"
