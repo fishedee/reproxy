@@ -19,6 +19,19 @@ type FastCgiHandler struct{
 	params map[string]string
 }
 
+type fastCgiReadCloser io.ReadCloser
+
+type fastCgiResponseBody struct{
+	fastCgiReadCloser
+	fcgi *fastcgi.FCGIClient
+}
+
+func (this *fastCgiResponseBody) Close()(error){
+	this.fcgi.Close()
+	return this.fastCgiReadCloser.Close()
+}
+
+
 func NewFastCgiHandler(protocol string, address string, documentRoot string,documentIndex string,params map[string]string,timeoutError time.Duration )(ProxyHandler,error){
 	return &FastCgiHandler{
 		protocol:protocol,
@@ -39,11 +52,11 @@ func (this *FastCgiHandler)Do(request *http.Request)(*http.Response,error){
 	header := map[string]string{}
 	header["QUERY_STRING"] = request.URL.RawQuery
 	header["REQUEST_METHOD"] = request.Method
-	header["SCRIPT_FILENAME"] =  strings.TrimLeft(this.documentRoot,"/") + "/" + strings.TrimLeft(this.documentIndex,"/")
-	header["SCRIPT_NAME"] = strings.TrimLeft(this.documentIndex,"/")
+	header["SCRIPT_FILENAME"] =  "/"+strings.TrimLeft(this.documentRoot,"/") + "/" + strings.TrimLeft(this.documentIndex,"/")
+	header["SCRIPT_NAME"] = "/"+strings.TrimLeft(this.documentIndex,"/")
 	header["REQUEST_URI"] = request.URL.RequestURI()
-	header["DOCUMENT_URI"] = strings.TrimLeft(this.documentRoot,"/")
-	header["DOCUMENT_ROOT"] = strings.TrimLeft(this.documentIndex,"/")
+	header["DOCUMENT_URI"] = "/"+strings.TrimLeft(this.documentRoot,"/")
+	header["DOCUMENT_ROOT"] = "/"+strings.TrimLeft(this.documentIndex,"/")
 	header["SERVER_PROTOCOL"] = "HTTP/1.1"
 	header["GATEWAY_INTERFACE"] = "CGI/1.1"
 	header["SERVER_SOFTWARE"] = "reverse-proxy/1.0"
@@ -63,14 +76,13 @@ func (this *FastCgiHandler)Do(request *http.Request)(*http.Response,error){
 	}
 	header["HTTP_HOST"] = request.Host;
 	for key,value := range request.Header{
-		header["HTTP_"+strings.ToUpper(key)] = value[0]
+		header["HTTP_"+strings.Replace(strings.ToUpper(key),"-","_",-1)] = value[0]
 	}
 
 	//设置body素据
 	var bodyReader io.Reader
 	body := request.Body
 	if body != nil{
-		defer body.Close()
 		if request.Header["Content-Type"] != nil &&
 			len(request.Header["Content-Type"]) != 0 &&
 			request.Header["Content-Length"] != nil &&
@@ -89,6 +101,16 @@ func (this *FastCgiHandler)Do(request *http.Request)(*http.Response,error){
 		}
 	}
 	
-	return fcgi.Request(header,bodyReader)
+	response,err := fcgi.Request(header,bodyReader)
+	if err != nil{
+		return nil,err
+	}
+
+	response.Body = &fastCgiResponseBody{
+		fastCgiReadCloser:response.Body,
+		fcgi:fcgi,
+	}
+
+	return response,nil
 }
 

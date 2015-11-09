@@ -2,15 +2,18 @@ package module
 
 import (
 	"encoding/gob"
+	"net/http"
 	"time"
 	"bytes"
 	"sync"
+	"strings"
 	"github.com/coocood/freecache"
 )
 
 type Cache struct{
 	cache *freecache.Cache
 	mutex *sync.Mutex
+	expireTime time.Duration
 	data map[string]bool
 }
 
@@ -20,7 +23,7 @@ type CacheResponse struct{
 	Body []byte
 }
 
-func NewCache(size int)(*Cache){
+func NewCache(size int,expireTime time.Duration)(*Cache){
 	if size == 0 {
 		return &Cache{}
 	}else{
@@ -28,15 +31,12 @@ func NewCache(size int)(*Cache){
 			cache:freecache.NewCache(size),
 			mutex:&sync.Mutex{},
 			data:map[string]bool{},
+			expireTime:expireTime,
 		}
 	}	
 }
 
-func (this *Cache)AcquireLock(method string,url string)(bool){
-	if this.cache == nil || method != "GET"{
-		return true
-	}
-
+func (this *Cache)AcquireLock(url string)(bool){
 	this.mutex.Lock()
 	defer this.mutex.Unlock()
 
@@ -49,22 +49,14 @@ func (this *Cache)AcquireLock(method string,url string)(bool){
 	}
 }
 
-func (this *Cache)ReleaseLock(method string,url string){
-	if this.cache == nil || method != "GET"{
-		return
-	}
-
+func (this *Cache)ReleaseLock(url string){
 	this.mutex.Lock()
 	defer this.mutex.Unlock()
 
 	this.data[url] = false
 }
 
-func (this *Cache)Get(method string,url string)(*CacheResponse){
-	if this.cache == nil || method != "GET"{
-		return nil
-	}
-
+func (this *Cache)GetInner(url string)(*CacheResponse){
 	data,err := this.cache.Get([]byte(url))
 	if err != nil{
 		return nil
@@ -78,17 +70,11 @@ func (this *Cache)Get(method string,url string)(*CacheResponse){
     	Logger.Error("decode error!"+err.Error())
         return nil
     }
-
-    delete(result.Header,"Set-Cookie")
 	return &result
 }
 
 
-func (this *Cache)Set(method string,url string,response *CacheResponse,expireTime time.Duration){
-	if this.cache == nil || method != "GET"{
-		return
-	}
-
+func (this *Cache)SetInner(url string,response *CacheResponse,expireTime time.Duration){
 	buf := bytes.NewBuffer(nil)
     enc := gob.NewEncoder(buf)  
     err := enc.Encode(response)
@@ -99,4 +85,54 @@ func (this *Cache)Set(method string,url string,response *CacheResponse,expireTim
 
     this.cache.Set([]byte(url),buf.Bytes(),int(expireTime.Seconds()))
     return
+}
+
+func (this *Cache)GetCacheUrlString(request *http.Request)(string){
+	requestUrl := *request.URL
+	requestQueryParam := requestUrl.Query()
+	requestQueryParam.Del("t")
+	requestQueryParam.Del("_")
+	requestUrl.RawQuery = requestQueryParam.Encode()
+	requestUrlString := requestUrl.String()
+	return requestUrlString
+}
+
+func (this *Cache)Get(request *http.Request)(*CacheResponse,bool){
+	if request.Method != "GET" || this.cache == nil{
+		return nil,false;
+	}
+
+	cacheUrl := this.GetCacheUrlString(request)
+	response := this.GetInner(cacheUrl)
+	if response != nil{
+		return response,false
+	}
+
+	hasLock := this.AcquireLock(cacheUrl)
+	if hasLock == false{
+		response = this.GetInner(cacheUrl+"_old")
+	}
+	return response,hasLock
+}
+
+func (this *Cache)Set(request *http.Request,response *CacheResponse,hasLock bool){
+	if request.Method != "GET" || this.cache == nil || hasLock == false{
+		return 
+	}
+
+	var newResponse CacheResponse
+	newResponse.StatusCode = response.StatusCode
+	newResponse.Body = response.Body
+	newResponse.Header = map[string][]string{}
+	for key,value := range response.Header{
+		lowerKey := strings.ToLower(key)
+		if lowerKey == "set-cookie"{
+			continue
+		}
+		newResponse.Header[key] = value
+	}
+
+	cacheUrl := this.GetCacheUrlString(request)
+	this.SetInner(cacheUrl,&newResponse,this.expireTime)
+	this.SetInner(cacheUrl+"_old",&newResponse,0)
 }

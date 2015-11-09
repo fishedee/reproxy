@@ -26,34 +26,16 @@ type ProxyLocationConfig struct{
 type RouteHandler struct{
 	TimeoutWarn time.Duration
 	Cache *Cache
-	CacheExpireTime time.Duration
 	Client ProxyHandler
 }
 
 func (this *RouteHandler) HandleHttpRequest(request *http.Request)(*CacheResponse,error){
-	request.RequestURI = ""
-	queryParam := request.URL.Query()
-	queryParam.Del("t")
-	queryParam.Del("_")
-	request.URL.RawQuery = queryParam.Encode()
-
-	url := request.URL.String()
-	method := request.Method
-	cacheResponse := this.Cache.Get(method,url)
+	cacheResponse,hasLock := this.Cache.Get(request)
 	if cacheResponse != nil{
 		return cacheResponse,nil
 	}
 
-	hasLock := this.Cache.AcquireLock(method,url)
-	if hasLock == false{
-		cacheResponse = this.Cache.Get(method,url+"_old")
-		if cacheResponse != nil{
-			return cacheResponse,nil
-		}
-	}else{
-		defer this.Cache.ReleaseLock(method,url)
-	}
-
+	request.RequestURI = ""
     resp, err := this.Client.Do(request)
     if err != nil{
     	return nil,err
@@ -71,10 +53,7 @@ func (this *RouteHandler) HandleHttpRequest(request *http.Request)(*CacheRespons
     	Body:body,
     }
 
-    if hasLock{
-    	this.Cache.Set(method,url,cacheResponse,this.CacheExpireTime)
-   		this.Cache.Set(method,url+"_old",cacheResponse,0)
-    }
+    this.Cache.Set(request,cacheResponse,hasLock)
 
     return cacheResponse,nil
 }
@@ -188,8 +167,7 @@ func SeviceProxy(config ProxyConfig)(error){
 			singleLocation.Url,
 			&RouteHandler{
 				TimeoutWarn:timeoutWarn,
-				Cache:NewCache(cacheSize),
-				CacheExpireTime:cacheExpireTime,
+				Cache:NewCache(cacheSize,cacheExpireTime),
 				Client:client,
 			},
 		)
