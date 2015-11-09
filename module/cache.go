@@ -119,6 +119,8 @@ func (this *Cache)Set(request *http.Request,response *CacheResponse,hasLock bool
 	if request.Method != "GET" || this.cache == nil || hasLock == false{
 		return 
 	}
+	cacheUrl := this.GetCacheUrlString(request)
+	this.ReleaseLock(cacheUrl)
 
 	var newResponse CacheResponse
 	newResponse.StatusCode = response.StatusCode
@@ -132,7 +134,6 @@ func (this *Cache)Set(request *http.Request,response *CacheResponse,hasLock bool
 		newResponse.Header[key] = value
 	}
 
-	cacheUrl := this.GetCacheUrlString(request)
 	this.SetInner(cacheUrl,&newResponse,this.expireTime)
 	this.SetInner(cacheUrl+"_old",&newResponse,0)
 }
