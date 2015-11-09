@@ -2,11 +2,15 @@ package main
 
 import (
 	"fmt"
+	"flag"
 	. "github.com/fishedee/reproxy/module"
 )
 
 func main(){
-	config,err := GetConfigFromFile("config")
+	configFilePath := flag.String("c","config","config file address")
+	flag.Parse()
+
+	config,err := GetConfigFromFile(*configFilePath)
 	if err != nil{
 		fmt.Println("配置文件失败 "+err.Error())
 		return

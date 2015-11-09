@@ -1,5 +1,9 @@
-.PHONY:debug install build stop start restart
-debug:build stop start
+.PHONY:debug install build stop start_dev_linux start_dev_mac start_idc
+dev_linux:build stop start_dev_linux
+	echo "finish"
+dev_mac:build stop start_dev_mac
+	echo "finish"
+idc:build stop start_idc
 	echo "finish"
 build:
 	godep go build main.go
@@ -8,9 +12,15 @@ stop:
 	rm -rf reproxy.sock
 	-sudo pkill reproxy
 	-ps aux | grep -v "grep" | grep reproxy
-start:
-	sudo -u www-data nohup ./reproxy > nohup.out 2>&1 &
+start_dev_linux:
+	sudo -u www-data nohup ./reproxy -c config.dev.linux > nohup.out 2>&1 &
 	sleep 1
 	-ps aux | grep -v "grep" | grep reproxy
-restart:build stop start
-	echo "finish"
+start_dev_mac:
+	sudo -u nobody ./reproxy -c config.dev.mac > nohup.out 2>&1 &
+	sleep 1
+	-ps aux | grep -v "grep" | grep reproxy
+start_idc:
+	sudo -u www-data nohup ./reproxy -c config.idc > nohup.out 2>&1 &
+	sleep 1
+	-ps aux | grep -v "grep" | grep reproxy

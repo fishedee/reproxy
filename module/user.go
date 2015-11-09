@@ -16,15 +16,21 @@ func InitUser(config UserConfig)(error){
 	if targetUserName == ""{
 		return errors.New("invalid user config "+targetUserName)
 	}
-
-	currentUid := os.Getuid()
 	targetUser,err := user.Lookup(targetUserName)
 	if err != nil{
 		return err
 	}
+	targetUserName = targetUser.Username
 
-	if strconv.Itoa(currentUid) != targetUser.Uid{
-		return errors.New("invalid current user,target user is "+targetUserName)
+	currentUid := os.Getuid()
+	currentUser,err := user.LookupId(strconv.Itoa(currentUid))
+	if err != nil{
+		return err
+	}
+	currentUserName := currentUser.Username
+
+	if targetUserName != currentUserName{
+		return errors.New("invalid current user,target user is "+targetUserName+",current user is "+currentUserName)
 	}
 
 	return nil
