@@ -3,7 +3,7 @@ package main
 import (
 	"fmt"
 	"flag"
-	. "github.com/fishedee/reproxy/module"
+	. "./module"
 )
 
 func main(){

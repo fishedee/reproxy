@@ -6,7 +6,7 @@ dev_mac:build stop start_dev_mac
 idc:build stop start_idc
 	echo "finish"
 build:
-	godep go build main.go
+	go build main.go
 	mv main reproxy
 stop:
 	rm -rf reproxy.sock

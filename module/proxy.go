@@ -5,7 +5,7 @@ import (
 	"net/http"
 	"time"
 	"errors"
-	. "github.com/fishedee/reproxy/handler"
+	. "../handler"
 )
 
 type ProxyConfig struct{
