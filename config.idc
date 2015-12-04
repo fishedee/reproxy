@@ -19,10 +19,14 @@
 		{
 			"name":"go",
 			"type":"http",
-			"address":":8001"
+			"address":":9001"
 		}
 	],
 	"location":[
+		{
+			"url":"/goldenstatue/",
+			"server":"go"
+		},
 		{
 			"url":"/activity/get",
 			"server":"php",
