@@ -112,6 +112,7 @@ func (this *Cache)Get(request *http.Request)(*CacheResponse,bool){
 	if hasLock == false{
 		response = this.GetInner(cacheUrl+"_old")
 	}
+	
 	return response,hasLock
 }
 
@@ -122,6 +123,9 @@ func (this *Cache)Set(request *http.Request,response *CacheResponse,hasLock bool
 	cacheUrl := this.GetCacheUrlString(request)
 	this.ReleaseLock(cacheUrl)
 
+	if response == nil{
+		return
+	}
 	var newResponse CacheResponse
 	newResponse.StatusCode = response.StatusCode
 	newResponse.Body = response.Body

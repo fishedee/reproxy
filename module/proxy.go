@@ -29,8 +29,13 @@ type RouteHandler struct{
 	Client ProxyHandler
 }
 
+func (this *RouteHandler) SetCache(request *http.Request,cacheResponse **CacheResponse,hasLock bool){
+	this.Cache.Set(request,*cacheResponse,hasLock)
+}
 func (this *RouteHandler) HandleHttpRequest(request *http.Request)(*CacheResponse,error){
 	cacheResponse,hasLock := this.Cache.Get(request)
+	defer this.SetCache(request,&cacheResponse,hasLock)
+
 	if cacheResponse != nil{
 		return cacheResponse,nil
 	}
@@ -52,9 +57,6 @@ func (this *RouteHandler) HandleHttpRequest(request *http.Request)(*CacheRespons
     	StatusCode:resp.StatusCode,
     	Body:body,
     }
-
-    this.Cache.Set(request,cacheResponse,hasLock)
-
     return cacheResponse,nil
 }
 func (this *RouteHandler) HandleHttp(writer http.ResponseWriter,request *http.Request)(int,error){
