@@ -28,6 +28,10 @@
 			"server":"go"
 		},
 		{
+			"url":"/file/uploadImage",
+			"server":"go"
+		},
+		{
 			"url":"/activity/get",
 			"server":"php",
 			"cache_time":"1s",
