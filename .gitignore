@@ -1,4 +1,5 @@
 log/access.log*
+log/reproxy-std.log*
 nohup.out
 reproxy
 

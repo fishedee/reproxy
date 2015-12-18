@@ -3,7 +3,7 @@ dev_linux:build stop start_dev_linux
 	echo "finish"
 dev_mac:build stop start_dev_mac
 	echo "finish"
-idc:build stop start_idc
+idc:build stop_idc start_idc
 	echo "finish"
 build:
 	go build main.go
@@ -21,6 +21,9 @@ start_dev_mac:
 	sleep 1
 	-ps aux | grep -v "grep" | grep reproxy
 start_idc:
-	sudo -u www-data nohup ./reproxy -c config.idc > nohup.out 2>&1 &
+	sudo supervisorctl restart reproxy
 	sleep 1
 	-ps aux | grep -v "grep" | grep reproxy
+stop_idc:
+	sudo supervisorctl stop reproxy
+	-pkill -9 reproxy

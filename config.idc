@@ -9,7 +9,7 @@
 		{
 			"name":"php",
 			"type":"fastcgi",
-			"address":"unix:/var/run/fastcgi/php5-fpm.sock",
+			"address":"10.163.126.155:9000",
 			"document_root":"/var/www/BakeWeb",
 			"document_index":"/server/index.php",
 			"params":{
