@@ -56,7 +56,7 @@ func (this *FastCgiHandler)Do(request *http.Request)(*http.Response,error){
 	header["SCRIPT_NAME"] = "/"+strings.TrimLeft(this.documentIndex,"/")
 	header["REQUEST_URI"] = request.URL.RequestURI()
 	header["DOCUMENT_URI"] = "/"+strings.TrimLeft(this.documentRoot,"/")
-	header["DOCUMENT_ROOT"] = "/"+strings.TrimLeft(this.documentIndex,"/")
+	header["DOCUMENT_ROOT"] = "/"+strings.TrimLeft(this.documentRoot,"/")
 	header["SERVER_PROTOCOL"] = "HTTP/1.1"
 	header["GATEWAY_INTERFACE"] = "CGI/1.1"
 	header["SERVER_SOFTWARE"] = "reverse-proxy/1.0"
