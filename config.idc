@@ -28,6 +28,10 @@
 			"server":"go"
 		},
 		{
+			"url":"/file/uploadImage",
+			"server":"go"
+		},
+		{
 			"url":"/rate/",
 			"server":"go"
 		},
