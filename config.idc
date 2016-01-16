@@ -36,7 +36,11 @@
 			"server":"go"
 		},
 		{
-			"url":"/appmsg/send",
+			"url":"/appmsg/",
+			"server":"go"
+		},
+		{
+			"url":"/point/sendDayPoint",
 			"server":"go"
 		},
 		{
