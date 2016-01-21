@@ -49,6 +49,30 @@
 			"server":"go"
 		},
 		{
+			"url":"/invite/checkInvite",
+			"server":"go"
+		},
+		{
+			"url":"/invite/inviteClient",
+			"server":"go"
+		},
+		{
+			"url":"/invite/searchCode",
+			"server":"go"
+		},
+		{
+			"url":"/invite/getCode",
+			"server":"go"
+		},
+		{
+			"url":"/invite/searchClient",
+			"server":"go"
+		},
+		{
+			"url":"/invite/getClient",
+			"server":"go"
+		},
+		{
 			"url":"/activity/get",
 			"server":"php",
 			"cache_time":"1s",
