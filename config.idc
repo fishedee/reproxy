@@ -320,6 +320,10 @@
 			"server":"go"
 		},
 		{
+			"url":"/appstatic/getFile",
+			"server":"go"
+		},
+		{
 			"url":"/activity/get",
 			"server":"php",
 			"cache_time":"1s",

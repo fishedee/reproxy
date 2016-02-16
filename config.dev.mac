@@ -25,6 +25,54 @@
 			"server":"go"
 		},
 		{
+			"url":"/file/uploadImage",
+			"server":"go"
+		},
+		{
+			"url":"/rate/",
+			"server":"go"
+		},
+		{
+			"url":"/appmsg/",
+			"server":"go"
+		},
+		{
+			"url":"/point/sendDayPoint",
+			"server":"go"
+		},
+		{
+			"url":"/weixin/getJsConfig",
+			"server":"go"
+		},
+		{
+			"url":"/invite/checkInvite",
+			"server":"go"
+		},
+		{
+			"url":"/invite/inviteClient",
+			"server":"go"
+		},
+		{
+			"url":"/invite/searchCode",
+			"server":"go"
+		},
+		{
+			"url":"/invite/getCode",
+			"server":"go"
+		},
+		{
+			"url":"/invite/searchClient",
+			"server":"go"
+		},
+		{
+			"url":"/invite/getClient",
+			"server":"go"
+		},
+		{
+			"url":"/appstatic/getFile",
+			"server":"go"
+		},
+		{
 			"url":"/activity/get",
 			"server":"php",
 			"cache_time":"1s",
