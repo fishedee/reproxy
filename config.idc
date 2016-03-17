@@ -24,6 +24,10 @@
 	],
 	"location":[
 		{
+			"url":"/appstatic/",
+			"server":"go"
+		},
+		{
 			"url":"/goldenstatue/",
 			"server":"go"
 		},
@@ -45,10 +49,6 @@
 		},
 		{
 			"url":"/weixin/getJsConfig",
-			"server":"go"
-		},
-		{
-			"url":"/appstatic/getFile",
 			"server":"go"
 		},
 		{
@@ -75,6 +75,10 @@
 			"url":"/invite/getClient",
 			"server":"go"
 		},
+		{
+             "url":"/export/",
+             "server":"go"
+	    },
 		{
 			"url":"/activity/get",
 			"server":"php",
