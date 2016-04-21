@@ -47,6 +47,23 @@ func (this *RouteHandler) HandleHttpRequest(request *http.Request) (*CacheRespon
 	}
 	defer resp.Body.Close()
 
+	//FIXME 特殊逻辑
+	if request.URL.Path == "/appstatic/getFile" {
+		Logger.Info(
+			"%v => Code:[%v],Header:[%v]",
+			request.URL,
+			resp.StatusCode,
+			resp.Header,
+		)
+		_, isExist := resp.Header["Etag"]
+		if resp.StatusCode == 200 && isExist == false {
+			Logger.Error(
+				"%v => Has No Etag!!!",
+				request.URL,
+			)
+		}
+	}
+
 	body, err := ioutil.ReadAll(resp.Body)
 	if err != nil {
 		return nil, err
