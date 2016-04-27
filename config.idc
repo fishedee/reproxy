@@ -32,7 +32,7 @@
 			"server":"go"
 		},
 		{
-			"url":"/file/uploadImage",
+			"url":"/file/",
 			"server":"go"
 		},
 		{
