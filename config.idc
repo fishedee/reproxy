@@ -19,7 +19,7 @@
 		{
 			"name":"go",
 			"type":"http",
-			"address":":9001"
+			"address":"10.144.144.249:9001"
 		}
 	],
 	"location":[
@@ -28,7 +28,7 @@
 			"server":"go"
 		},
 		{
-			"url":"/goldenstatue/",
+			"url":"/backstage/goldenstatue/",
 			"server":"go"
 		},
 		{
@@ -40,7 +40,15 @@
 			"server":"go"
 		},
 		{
+			"url":"/backstage/rate/",
+			"server":"go"
+		},
+		{
 			"url":"/appmsg/",
+			"server":"go"
+		},
+		{
+			"url":"/backstage/appmsg/",
 			"server":"go"
 		},
 		{
@@ -60,19 +68,7 @@
 			"server":"go"
 		},
 		{
-			"url":"/invite/searchCode",
-			"server":"go"
-		},
-		{
-			"url":"/invite/getCode",
-			"server":"go"
-		},
-		{
-			"url":"/invite/searchClient",
-			"server":"go"
-		},
-		{
-			"url":"/invite/getClient",
+			"url":"/backstage/invite/",
 			"server":"go"
 		},
 		{
@@ -80,7 +76,31 @@
              "server":"go"
 	    },
 		{
+             "url":"/backstage/export/",
+             "server":"go"
+	    },
+		{
+             "url":"/backstage/virtual/",
+             "server":"go"
+	    },
+		{
 			"url":"/appidfa/",
+			"server":"go"
+		},
+		{
+			"url":"/backstage/appidfa/",
+			"server":"go"
+		},
+		{
+			"url":"/search/",
+			"server":"go"
+		},
+		{
+			"url":"/keyword/",
+			"server":"go"
+		},
+		{
+			"url":"/backstage/search/",
 			"server":"go"
 		},
 		{
