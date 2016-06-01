@@ -56,7 +56,11 @@
 			"server":"go"
 		},
 		{
-			"url":"/weixin/getJsConfig",
+			"url":"/weixin/",
+			"server":"go"
+		},
+		{
+			"url":"/backstage/weixin/",
 			"server":"go"
 		},
 		{
