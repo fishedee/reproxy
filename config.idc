@@ -108,6 +108,38 @@
 			"server":"go"
 		},
 		{
+			"url":"/feed/",
+			"server":"go"
+		},
+		{
+			"url":"/question/getNew",
+			"server":"go"
+		},
+		{
+			"url":"/question/getHot",
+			"server":"go"
+		},
+		{
+			"url":"/question/getUnAnswer",
+			"server":"go"
+		},
+		{
+			"url":"/client/get",
+			"server":"go"
+		},
+		{
+			"url":"/client/getDish",
+			"server":"go"
+		},
+		{
+			"url":"/client/getRecipe",
+			"server":"go"
+		},
+		{
+			"url":"/client/getQuestionAndAnswer",
+			"server":"go"
+		},
+		{
 			"url":"/activity/get",
 			"server":"php",
 			"cache_time":"1s",
