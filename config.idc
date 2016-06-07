@@ -140,6 +140,42 @@
 			"server":"go"
 		},
 		{
+			"url":"/backstage/category/",
+			"server":"go"
+		},
+		{
+			"url":"/index/",
+			"server":"go"
+		},
+		{
+			"url":"/backstage/link/",
+			"server":"go"
+		},
+		{
+			"url":"/link/",
+			"server":"go"
+		},
+		{
+			"url":"/backstage/complaint/",
+			"server":"go"
+		},
+		{
+			"url":"/complaint/",
+			"server":"go"
+		},
+		{
+			"url":"/backstage/user/",
+			"server":"go"
+		},
+		{
+			"url":"/backstage/notice/",
+			"server":"go"
+		},
+		{
+			"url":"/notice/",
+			"server":"go"
+		},
+		{
 			"url":"/activity/get",
 			"server":"php",
 			"cache_time":"1s",
