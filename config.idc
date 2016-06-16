@@ -176,6 +176,30 @@
 			"server":"go"
 		},
 		{
+			"url":"/backstage/comment/batchDel",
+			"server":"go"
+		},
+		{
+			"url":"/bind/",
+			"server":"go"
+		},
+		{
+			"url":"/backstage/bind/",
+			"server":"go"
+		},
+		{
+			"url":"/backstage/block/",
+			"server":"go"
+		},
+		{
+			"url":"/login/",
+			"server":"go"
+		},
+		{
+			"url":"/account/",
+			"server":"go"
+		},
+		{
 			"url":"/activity/get",
 			"server":"php",
 			"cache_time":"1s",
