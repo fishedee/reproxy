@@ -324,6 +324,14 @@
 			"server":"go"
 		},
 		{
+			"url":"/block/",
+			"server":"go"
+		},
+		{
+			"url":"/appidfa/",
+			"server":"go"
+		},
+		{
 			"url":"/activity/get",
 			"server":"php",
 			"cache_time":"1s",

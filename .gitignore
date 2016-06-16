@@ -1,4 +1,4 @@
-log/access.log*
+log/access.*log*
 log/reproxy-std.log*
 log/*
 nohup.out

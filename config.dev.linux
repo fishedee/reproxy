@@ -73,7 +73,19 @@
 			"server":"go"
 		},
 		{
-			"url":"/appstatic/getFile",
+		 	"url":"/export/",
+		 	"server":"go"
+		},
+		{
+		 	"url":"/backstage/export/",
+		 	"server":"go"
+		},
+		{
+			"url":"/appidfa/",
+			"server":"go"
+		},
+		{
+			"url":"/backstage/virtual/",
 			"server":"go"
 		},
 		{
@@ -87,6 +99,110 @@
 			"server":"php",
 			"cache_time":"1s",
 			"cache_size":"16m"
+		},
+		{
+			"url":"/search/",
+			"server":"go"
+		},
+		{
+			"url":"/keyword/",
+			"server":"go"
+		},
+		{
+			"url":"/backstage/search/",
+			"server":"go"
+		},
+		{
+			"url":"/feed/",
+			"server":"go"
+		},
+		{
+			"url":"/question/getNew",
+			"server":"go"
+		},
+		{
+			"url":"/question/getHot",
+			"server":"go"
+		},
+		{
+			"url":"/question/getUnAnswer",
+			"server":"go"
+		},
+		{
+			"url":"/client/get",
+			"server":"go"
+		},
+		{
+			"url":"/client/getDish",
+			"server":"go"
+		},
+		{
+			"url":"/client/getRecipe",
+			"server":"go"
+		},
+		{
+			"url":"/client/getQuestionAndAnswer",
+			"server":"go"
+		},
+		{
+			"url":"/backstage/category/",
+			"server":"go"
+		},
+		{
+			"url":"/index/",
+			"server":"go"
+		},
+		{
+			"url":"/backstage/link/",
+			"server":"go"
+		},
+		{
+			"url":"/link/",
+			"server":"go"
+		},
+		{
+			"url":"/backstage/complaint/",
+			"server":"go"
+		},
+		{
+			"url":"/complaint/",
+			"server":"go"
+		},
+		{
+			"url":"/backstage/user/",
+			"server":"go"
+		},
+		{
+			"url":"/backstage/notice/",
+			"server":"go"
+		},
+		{
+			"url":"/notice/",
+			"server":"go"
+		},
+		{
+			"url":"/bind/",
+			"server":"go"
+		},
+		{
+			"url":"/backstage/bind/",
+			"server":"go"
+		},
+		{
+			"url":"/backstage/client/testlogin",
+			"server":"go"
+		},
+		{
+			"url":"/backstage/block/",
+			"server":"go"
+		},
+		{
+			"url":"/login/",
+			"server":"go"
+		},
+		{
+			"url":"/account/",
+			"server":"go"
 		},
 		{
 			"url":"/",
