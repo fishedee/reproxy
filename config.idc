@@ -196,6 +196,14 @@
 			"server":"go"
 		},
 		{
+			"url":"/login/wxlogin",
+			"server":"php"
+		},
+		{
+			"url":"/login/wxlogincallback",
+			"server":"php"
+		},
+		{
 			"url":"/account/",
 			"server":"go"
 		},
@@ -205,6 +213,34 @@
 		},
 		{
 			"url":"/letter/",
+			"server":"go"
+		},
+		{
+			"url":"/backstage/groupbuy/",
+			"server":"go"
+		},
+		{
+			"url":"/groupbuy/",
+			"server":"go"
+		},
+		{
+			"url":"/backstage/feedback/",
+			"server":"go"
+		},
+		{
+			"url":"/feedback/",
+			"server":"go"
+		},
+		{
+			"url":"/backstage/client/testlogin",
+			"server":"go"
+		},
+		{
+			"url":"/backstage/pointsign/",
+			"server":"go"
+		},
+		{
+			"url":"/sign/",
 			"server":"go"
 		},
 		{

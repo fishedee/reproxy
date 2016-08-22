@@ -1,11 +1,12 @@
 package module
 
 import (
-	. "../handler"
 	"errors"
 	"io/ioutil"
 	"net/http"
 	"time"
+
+	. "../handler"
 )
 
 type ProxyConfig struct {
@@ -88,6 +89,14 @@ func (this *RouteHandler) HandleHttp(writer http.ResponseWriter, request *http.R
 		}
 	}
 	writer.WriteHeader(resp.StatusCode)
+	statusCode := resp.StatusCode
+	if statusCode != 200 &&
+		statusCode != 304 {
+		Logger.Warn(
+			"响应: %+v",
+			resp,
+		)
+	}
 	writer.Write(resp.Body)
 	return resp.StatusCode, nil
 }
