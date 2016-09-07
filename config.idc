@@ -36,6 +36,10 @@
 			"server":"go"
 		},
 		{
+			"url":"/backstage/file/",
+			"server":"go"
+		},
+		{
 			"url":"/rate/",
 			"server":"go"
 		},
