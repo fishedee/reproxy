@@ -248,6 +248,22 @@
 			"server":"go"
 		},
 		{
+			"url":"/backstage/tribe/",
+			"server":"go"
+		},
+		{
+			"url":"/tribe/",
+			"server":"go"
+		},
+		{
+			"url":"/backstage/shield/",
+			"server":"go"
+		},
+		{
+			"url":"/backstage/appversion/",
+			"server":"go"
+		},
+		{
 			"url":"/activity/get",
 			"server":"php",
 			"cache_time":"1s",
