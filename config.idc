@@ -184,6 +184,14 @@
 			"server":"go"
 		},
 		{
+			"url":"/backstage/question/batchDelQuestion",
+			"server":"go"
+		},
+		{
+			"url":"/backstage/question/batchDelAnswer",
+			"server":"go"
+		},
+		{
 			"url":"/bind/",
 			"server":"go"
 		},
@@ -261,6 +269,26 @@
 		},
 		{
 			"url":"/backstage/appversion/",
+			"server":"go"
+		},
+		{
+			"url":"/backstage/appstart/",
+			"server":"go"
+		},
+		{
+			"url":"/appstart/",
+			"server":"go"
+		},
+		{
+			"url":"/item/getTaoBaoKeFavorites",
+			"server":"go"
+		},
+		{
+			"url":"/item/getByFavoritesId",
+			"server":"go"
+		},
+		{
+			"url":"/backstage/remind/",
 			"server":"go"
 		},
 		{
