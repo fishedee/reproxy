@@ -292,6 +292,10 @@
 			"server":"go"
 		},
 		{
+			"url":"/backstage/clientaction/",
+			"server":"go"
+		},
+		{
 			"url":"/activity/get",
 			"server":"php",
 			"cache_time":"1s",
