@@ -5,6 +5,16 @@
 		"filename":"log/access.log",
 		"level":"info"
 	},
+	"rate":{
+		"comment":"请求频率限制：time时间内只能请求max次",
+		"max":20,
+		"time":"1s",
+		"log":{
+			"filename":"log/rateips.log",
+			"level":"info"
+		},
+		"cache_size":"100m"
+	},
 	"server":[
 		{
 			"name":"php",

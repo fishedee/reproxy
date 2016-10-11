@@ -3,11 +3,12 @@ package module
 import (
 	"bytes"
 	"encoding/gob"
-	"github.com/coocood/freecache"
 	"net/http"
 	"strings"
 	"sync"
 	"time"
+
+	"github.com/coocood/freecache"
 )
 
 type Cache struct {
