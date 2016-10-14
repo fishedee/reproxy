@@ -306,42 +306,6 @@
 			"server":"go"
 		},
 		{
-			"url":"/invite/checkInvite",
-			"server":"go"
-		},
-		{
-			"url":"/invite/inviteClient",
-			"server":"go"
-		},
-		{
-			"url":"/invite/searchCode",
-			"server":"go"
-		},
-		{
-			"url":"/invite/getCode",
-			"server":"go"
-		},
-		{
-			"url":"/invite/searchClient",
-			"server":"go"
-		},
-		{
-			"url":"/invite/getClient",
-			"server":"go"
-		},
-		{
-			"url":"/appstatic/getFile",
-			"server":"go"
-		},
-		{
-			"url":"/block/",
-			"server":"go"
-		},
-		{
-			"url":"/appidfa/",
-			"server":"go"
-		},
-		{
 			"url":"/activity/get",
 			"server":"php",
 			"cache_time":"1s",
