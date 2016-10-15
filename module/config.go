@@ -18,6 +18,7 @@ type Config struct {
 }
 
 func GetConfigTime(in string) (time.Duration, error) {
+	in = strings.TrimSpace(in)
 	if len(in) == 0 {
 		return 0, nil
 	}
@@ -41,6 +42,7 @@ func GetConfigTime(in string) (time.Duration, error) {
 }
 
 func GetConfigSize(in string) (int, error) {
+	in = strings.TrimSpace(in)
 	if len(in) == 0 {
 		return 0, nil
 	}
@@ -63,6 +65,10 @@ func GetConfigSize(in string) (int, error) {
 }
 
 func GetConfigNetInfo(address string) (string, string, error) {
+	address = strings.TrimSpace(address)
+	if address == "" {
+		return "", "", errors.New("输入地址不能为空")
+	}
 	addrInfo := strings.Split(address, ":")
 	if len(addrInfo) == 1 {
 		return "tcp", address, nil
