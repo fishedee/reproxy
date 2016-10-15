@@ -282,27 +282,29 @@ func RateLimitHandler(limiter *config.Limiter, next http.Handler) http.Handler {
 
 		// 检查Ip
 		remoteIP := libstring.RemoteIP(limiter.IPLookups, r)
-		_, err := rateCache.Get([]byte(remoteIP))
-		if err == nil {
-			w.WriteHeader(500)
-			w.Write([]byte("connection refused."))
-			return
-		}
+		if remoteIP != "127.0.0.1" {
+			_, err := rateCache.Get([]byte(remoteIP))
+			if err == nil {
+				w.WriteHeader(500)
+				w.Write([]byte("connection refused."))
+				return
+			}
 
-		// 频率校验
-		httpError := tollbooth.LimitByRequest(limiter, r)
-		if httpError != nil {
-			// 记录超频Ip
-			rateCache.Set([]byte(remoteIP), []byte("true"), 0)
+			// 频率校验
+			httpError := tollbooth.LimitByRequest(limiter, r)
+			if httpError != nil {
+				// 记录超频Ip
+				rateCache.Set([]byte(remoteIP), []byte("true"), 0)
 
-			// 同步到日志
-			RateLogger.Info(remoteIP)
+				// 同步到日志
+				RateLogger.Info(remoteIP)
 
-			// 返回429
-			w.Header().Add("Content-Type", limiter.MessageContentType)
-			w.WriteHeader(httpError.StatusCode)
-			w.Write([]byte(httpError.Message))
-			return
+				// 返回429
+				w.Header().Add("Content-Type", limiter.MessageContentType)
+				w.WriteHeader(httpError.StatusCode)
+				w.Write([]byte(httpError.Message))
+				return
+			}
 		}
 
 		// 正常访问
