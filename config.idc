@@ -214,6 +214,10 @@
 			"server":"go"
 		},
 		{
+			"url":"/block/",
+			"server":"go"
+		},
+		{
 			"url":"/login/",
 			"server":"go"
 		},
