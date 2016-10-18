@@ -285,8 +285,8 @@ func RateLimitHandler(limiter *config.Limiter, next http.Handler) http.Handler {
 		if remoteIP != "127.0.0.1" {
 			_, err := rateCache.Get([]byte(remoteIP))
 			if err == nil {
-				w.WriteHeader(500)
-				w.Write([]byte("connection refused."))
+				w.WriteHeader(200)
+				w.Write([]byte(`{"code":10002,"msg":"","data":"","remindPoint":{"count":0,"data":[]}}`))
 				return
 			}
 
