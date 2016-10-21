@@ -236,26 +236,10 @@
 	},
 	{
 		"url":"/backstage/item/",
-		"server":"php"
+		"server":"go"
 	},
 	{
 		"url":"/item/",
-		"server":"php"
-	},
-	{
-		"url":"/item/getTaoBaoKeFavorites",
-		"server":"go"
-	},
-	{
-		"url":"/item/getByFavoritesId",
-		"server":"go"
-	},
-	{
-		"url":"/item/getByKeyword",
-		"server":"go"
-	},
-	{
-		"url":"/item/getShopByKeyword",
 		"server":"go"
 	},
 	{
@@ -328,15 +312,23 @@
 	},
 	{
 		"url":"/activity/get",
-		"server":"php",
+		"server":"go",
 		"cache_time":"1s",
 		"cache_size":"16m"
 	},
 	{
 		"url":"/activity/getComponent",
-		"server":"php",
+		"server":"go",
 		"cache_time":"1s",
 		"cache_size":"16m"
+	},
+	{
+		"url":"/activity/",
+		"server":"go"
+	},
+	{
+		"url":"/backstage/activity/",
+		"server":"go"
 	},
 	{
 		"url":"/",

@@ -294,11 +294,11 @@
 			"server":"go"
 		},
 		{
-			"url":"/item/getTaoBaoKeFavorites",
+			"url":"/item/",
 			"server":"go"
 		},
 		{
-			"url":"/item/getByFavoritesId",
+			"url":"/backstage/item/",
 			"server":"go"
 		},
 		{
@@ -311,15 +311,23 @@
 		},
 		{
 			"url":"/activity/get",
-			"server":"php",
+			"server":"go",
 			"cache_time":"1s",
 			"cache_size":"16m"
 		},
 		{
 			"url":"/activity/getComponent",
-			"server":"php",
+			"server":"go",
 			"cache_time":"1s",
 			"cache_size":"16m"
+		},
+		{
+			"url":"/activity/",
+			"server":"php"
+		},
+		{
+			"url":"/backstage/activity/",
+			"server":"php"
 		},
 		{
 			"url":"/",
