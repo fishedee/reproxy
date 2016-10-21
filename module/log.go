@@ -28,7 +28,7 @@ type logConfigInner struct {
 }
 
 // 初始化日志模块
-func newLogger(config LogConfig) (*logs.BeeLogger, error) {
+func newLogger(config LogConfig, isDaily bool) (*logs.BeeLogger, error) {
 	var logger *logs.BeeLogger
 
 	var configInner logConfigInner
@@ -42,7 +42,7 @@ func newLogger(config LogConfig) (*logs.BeeLogger, error) {
 	}
 	configInner.Maxlines = config.Maxlines
 
-	configInner.Daily = true
+	configInner.Daily = isDaily
 
 	if config.Maxdays == 0 {
 		config.Maxdays = 7
@@ -82,9 +82,13 @@ func newLogger(config LogConfig) (*logs.BeeLogger, error) {
 	return logger, nil
 }
 
+func newDailyLogger(config LogConfig) (*logs.BeeLogger, error) {
+	return newLogger(config, true)
+}
+
 func InitLogger(config LogConfig) error {
 	var err error
-	Logger, err = newLogger(config)
+	Logger, err = newDailyLogger(config)
 	if err != nil {
 		return err
 	}
@@ -93,7 +97,7 @@ func InitLogger(config LogConfig) error {
 
 func InitRateLogger(config LogConfig) error {
 	var err error
-	RateLogger, err = newLogger(config)
+	RateLogger, err = newLogger(config, false)
 	if err != nil {
 		return err
 	}
