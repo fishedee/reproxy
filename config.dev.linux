@@ -75,11 +75,7 @@
 		"server":"go"
 	},
 	{
-		"url":"/invite/checkInvite",
-		"server":"go"
-	},
-	{
-		"url":"/invite/inviteClient",
+		"url":"/invite/",
 		"server":"go"
 	},
 	{
@@ -120,34 +116,6 @@
 	},
 	{
 		"url":"/feed/",
-		"server":"go"
-	},
-	{
-		"url":"/question/getNew",
-		"server":"go"
-	},
-	{
-		"url":"/question/getHot",
-		"server":"go"
-	},
-	{
-		"url":"/question/getUnAnswer",
-		"server":"go"
-	},
-	{
-		"url":"/client/get",
-		"server":"go"
-	},
-	{
-		"url":"/client/getDish",
-		"server":"go"
-	},
-	{
-		"url":"/client/getRecipe",
-		"server":"go"
-	},
-	{
-		"url":"/client/getQuestionAndAnswer",
 		"server":"go"
 	},
 	{
@@ -195,11 +163,11 @@
 		"server":"go"
 	},
 	{
-		"url":"/backstage/question/batchDelQuestion",
+		"url":"/question/",
 		"server":"go"
 	},
 	{
-		"url":"/backstage/question/batchDelAnswer",
+		"url":"/backstage/question/",
 		"server":"go"
 	},
 	{
@@ -263,6 +231,18 @@
 		"server":"go"
 	},
 	{
+		"url":"/backstage/pointclient/",
+		"server":"go"
+	},
+	{
+		"url":"/backstage/pointlevel/",
+		"server":"go"
+	},
+	{
+		"url":"/backstage/pointuploadactivity/",
+		"server":"go"
+	},
+	{
 		"url":"/sign/",
 		"server":"go"
 	},
@@ -287,6 +267,22 @@
 		"server":"go"
 	},
 	{
+		"url":"/medal/",
+		"server":"go"
+	},
+	{
+		"url":"/backstage/medal/",
+		"server":"go"
+	},
+	{
+		"url":"/backstage/client/",
+		"server":"go"
+	},
+	{
+		"url":"/client/",
+		"server":"go"
+	},
+	{
 		"url":"/backstage/appversion/",
 		"server":"go"
 	},
@@ -304,6 +300,10 @@
 	},
 	{
 		"url":"/backstage/clientaction/",
+		"server":"go"
+	},
+	{
+		"url":"/live/",
 		"server":"go"
 	},
 	{

@@ -280,16 +280,9 @@ func RateLimitHandler(limiter *config.Limiter, next http.Handler) http.Handler {
 	middle := func(w http.ResponseWriter, r *http.Request) {
 		tollbooth.SetResponseHeaders(limiter, w)
 
-		// 检查Ip
+		// 检查Ip频率
 		remoteIP := libstring.RemoteIP(limiter.IPLookups, r)
 		if remoteIP != "127.0.0.1" {
-			_, err := rateCache.Get([]byte(remoteIP))
-			if err == nil {
-				w.WriteHeader(200)
-				w.Write([]byte(`{"code":10002,"msg":"","data":"","remindPoint":{"count":0,"data":[]}}`))
-				return
-			}
-
 			// 频率校验
 			httpError := tollbooth.LimitByRequest(limiter, r)
 			if httpError != nil {
@@ -300,6 +293,7 @@ func RateLimitHandler(limiter *config.Limiter, next http.Handler) http.Handler {
 				RateLogger.Info(remoteIP)
 
 				// 返回429
+				initCors(w, r)
 				w.Header().Add("Content-Type", limiter.MessageContentType)
 				w.WriteHeader(httpError.StatusCode)
 				w.Write([]byte(httpError.Message))
@@ -312,6 +306,12 @@ func RateLimitHandler(limiter *config.Limiter, next http.Handler) http.Handler {
 	}
 
 	return http.HandlerFunc(middle)
+}
+
+func initCors(w http.ResponseWriter, r *http.Request) {
+	origin := r.Header.Get("Origin")
+	w.Header().Add("Access-Control-Allow-Origin", origin)
+	w.Header().Add("Access-Control-Allow-Credentials", "true")
 }
 
 func initRateCache(rateCacheSize int, fileName string) (*freecache.Cache, error) {
