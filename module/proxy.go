@@ -4,18 +4,14 @@ import (
 	"errors"
 	"io/ioutil"
 	"net/http"
-	"strings"
 	"time"
 
 	. "../handler"
 
-	"github.com/coocood/freecache"
 	"github.com/didip/tollbooth"
 	"github.com/didip/tollbooth/config"
 	"github.com/didip/tollbooth/libstring"
 )
-
-var rateCache *freecache.Cache
 
 type ProxyConfig struct {
 	Listen   string                `json:"listen"`
@@ -189,18 +185,6 @@ func SeviceProxy(config ProxyConfig) error {
 		return err
 	}
 
-	// Ip黑名单文件
-	rateIpFilename := config.Rate.Log.Filename
-
-	// 缓存大小
-	rateCacheSize, err := GetConfigSize(config.Rate.CacheSize)
-	if err != nil {
-		return err
-	}
-
-	// 缓存初始化
-	rateCache, _ = initRateCache(rateCacheSize, rateIpFilename)
-
 	// 路由分发
 	for _, singleLocation := range config.Location {
 		url := singleLocation.Url
@@ -286,9 +270,6 @@ func RateLimitHandler(limiter *config.Limiter, next http.Handler) http.Handler {
 			// 频率校验
 			httpError := tollbooth.LimitByRequest(limiter, r)
 			if httpError != nil {
-				// 记录超频Ip
-				rateCache.Set([]byte(remoteIP), []byte("true"), 0)
-
 				// 同步到日志
 				RateLogger.Info(remoteIP)
 
@@ -312,23 +293,4 @@ func initCors(w http.ResponseWriter, r *http.Request) {
 	origin := r.Header.Get("Origin")
 	w.Header().Add("Access-Control-Allow-Origin", origin)
 	w.Header().Add("Access-Control-Allow-Credentials", "true")
-}
-
-func initRateCache(rateCacheSize int, fileName string) (*freecache.Cache, error) {
-	cache := freecache.NewCache(rateCacheSize)
-
-	data, err := ioutil.ReadFile(fileName)
-	if err != nil {
-		return cache, err
-	}
-	lines := strings.Split(string(data), "\n")
-	for _, single := range lines {
-		lineInfo := strings.Split(single, " ")
-		if len(lineInfo) == 0 {
-			continue
-		}
-		cache.Set([]byte(lineInfo[len(lineInfo)-1]), []byte("true"), 0)
-	}
-
-	return cache, nil
 }
