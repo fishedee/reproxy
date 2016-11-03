@@ -126,18 +126,6 @@
 			"server":"go"
 		},
 		{
-			"url":"/question/getNew",
-			"server":"go"
-		},
-		{
-			"url":"/question/getHot",
-			"server":"go"
-		},
-		{
-			"url":"/question/getUnAnswer",
-			"server":"go"
-		},
-		{
 			"url":"/client/get",
 			"server":"go"
 		},
@@ -194,11 +182,11 @@
 			"server":"go"
 		},
 		{
-			"url":"/backstage/question/batchDelQuestion",
+			"url":"/question/",
 			"server":"go"
 		},
 		{
-			"url":"/backstage/question/batchDelAnswer",
+			"url":"/backstage/question/",
 			"server":"go"
 		},
 		{
@@ -323,11 +311,11 @@
 		},
 		{
 			"url":"/activity/",
-			"server":"php"
+			"server":"go"
 		},
 		{
 			"url":"/backstage/activity/",
-			"server":"php"
+			"server":"go"
 		},
 		{
 			"url":"/",
