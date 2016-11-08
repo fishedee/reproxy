@@ -78,11 +78,7 @@
 			"server":"go"
 		},
 		{
-			"url":"/invite/checkInvite",
-			"server":"go"
-		},
-		{
-			"url":"/invite/inviteClient",
+			"url":"/invite/",
 			"server":"go"
 		},
 		{
@@ -123,22 +119,6 @@
 		},
 		{
 			"url":"/feed/",
-			"server":"go"
-		},
-		{
-			"url":"/client/get",
-			"server":"go"
-		},
-		{
-			"url":"/client/getDish",
-			"server":"go"
-		},
-		{
-			"url":"/client/getRecipe",
-			"server":"go"
-		},
-		{
-			"url":"/client/getQuestionAndAnswer",
 			"server":"go"
 		},
 		{
@@ -315,6 +295,38 @@
 		},
 		{
 			"url":"/backstage/activity/",
+			"server":"go"
+		},
+		{
+ 			"url":"/backstage/pointclient/",
+			"server":"go"
+		},
+		{
+			"url":"/backstage/pointlevel/",
+			"server":"go"
+		},
+		{
+			"url":"/backstage/pointuploadactivity/",
+			"server":"go"
+		},
+		{
+			"url":"/medal/",
+			"server":"go"
+		},
+		{
+			"url":"/backstage/medal/",
+			"server":"go"
+		},
+		{
+			"url":"/backstage/client/",
+			"server":"go"
+		},
+		{
+			"url":"/client/",
+			"server":"go"
+		},
+		{
+			"url":"/live/",
 			"server":"go"
 		},
 		{
