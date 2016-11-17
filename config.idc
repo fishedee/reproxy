@@ -34,6 +34,10 @@
 	],
 	"location":[
 		{
+			"url":"/backstage/convert/",
+			"server":"go"
+		},
+		{
 			"url":"/appstatic/",
 			"server":"go"
 		},
@@ -158,10 +162,6 @@
 			"server":"go"
 		},
 		{
-			"url":"/backstage/comment/batchDel",
-			"server":"go"
-		},
-		{
 			"url":"/question/",
 			"server":"go"
 		},
@@ -191,11 +191,11 @@
 		},
 		{
 			"url":"/login/wxlogin",
-			"server":"php"
+			"server":"go"
 		},
 		{
 			"url":"/login/wxlogincallback",
-			"server":"php"
+			"server":"go"
 		},
 		{
 			"url":"/account/",
@@ -274,6 +274,10 @@
 			"server":"go"
 		},
 		{
+			"url":"/remind/",
+			"server":"go"
+		},
+		{
 			"url":"/backstage/clientaction/",
 			"server":"go"
 		},
@@ -327,6 +331,70 @@
 		},
 		{
 			"url":"/live/",
+			"server":"go"
+		},
+		{
+			"url":"/recipe/",
+			"server":"go"
+		},
+		{
+			"url":"/backstage/recipe/",
+			"server":"go"
+		},
+		{
+			"url":"/backstage/article/",
+			"server":"go"
+		},
+		{
+			"url":"/article/",
+			"server":"go"
+		},
+		{
+			"url":"/backstage/classify/",
+			"server":"go"
+		},
+		{
+			"url":"/classify/",
+			"server":"go"
+		},
+		{
+			"url":"/backstage/collection/",
+			"server":"go"
+		},
+		{
+			"url":"/collection/",
+			"server":"go"
+		},
+		{
+			"url":"/backstage/comment/",
+			"server":"go"
+		},
+		{
+			"url":"/comment/",
+			"server":"go"
+		},
+		{
+			"url":"/backstage/dish/",
+			"server":"go"
+		},
+		{
+			"url":"/dish/",
+			"server":"go"
+		},
+		{
+			"url":"/backstage/contentclient/",
+			"server":"go"
+		},
+		{
+			"url":"/contentclient/",
+			"server":"go"
+		},
+		{
+			"url":"/backstage/content/",
+			"server":"go"
+		},
+		{
+			"url":"/content/",
 			"server":"go"
 		},
 		{
