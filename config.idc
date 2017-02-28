@@ -7,7 +7,7 @@
 	},
 	"rate":{
 		"comment":"请求频率限制：time时间内只能请求max次",
-		"max":20,
+		"max":40,
 		"time":"1s",
 		"log":{
 			"filename":"log/rateips.log",
