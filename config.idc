@@ -29,10 +29,29 @@
 		{
 			"name":"go",
 			"type":"http",
+			"comment":"idc1",
+			"address":"10.163.126.155:9001"
+		},
+		{
+			"name":"live",
+			"type":"http",
+			"comment":"idc3",
 			"address":"10.144.144.249:9001"
 		}
 	],
 	"location":[
+	{
+		"url":"/live/",
+		"server":"live"
+	},
+	{
+		"url":"/course/",
+		"server":"live"
+	},
+	{
+		"url":"/paycallback/",
+		"server":"live"
+	},
 	{
 		"url":"/activity/get",
 		"server":"go",
