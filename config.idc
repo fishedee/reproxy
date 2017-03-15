@@ -53,6 +53,10 @@
 		"server":"live"
 	},
 	{
+		"url":"/appstatic/",
+		"server":"live"
+	},
+	{
 		"url":"/activity/get",
 		"server":"go",
 		"cache_time":"1s",
