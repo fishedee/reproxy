@@ -85,14 +85,6 @@
 		"server":"php"
 	},
 	{
-		"url":"/backstage/crawl/",
-		"server":"php"
-	},
-	{
-		"url":"/backstage/timer/",
-		"server":"php"
-	},
-	{
 		"url":"/",
 		"server":"go"
 	}
